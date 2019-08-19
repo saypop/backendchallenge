@@ -1,7 +1,7 @@
 ### Solution to OttoCar tech test
 
 To run this api locally:
-- `$ git clone this repo`
+- `$ git clone https://github.com/saypop/backendchallenge.git`
 - `$ cd backendchallenge`
 - Setup and enter a virtual environment:
 - `$ virtual venv`
