@@ -71,6 +71,15 @@ class APITestCase(unittest.TestCase):
         self.assertIn('London', str(resp.data))
         self.assertIn('SW4 0PE', str(resp.data))
 
+    def test_retrieve_all_drivers(self):
+        """Test api can get a list of all drivers with a GET request"""
+        resp = self.client().post('/drivers/', data=self.driver)
+        self.assertEqual(resp.status_code, 201)
+        resp = self.client().get('/drivers/')
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn('John Doe', str(resp.data))
+        self.assertIn('01/01/1980', str(resp.data))
+
     def test_can_retrieve_car_by_id(self):
         """Test api can retrieve an existing car by id"""
         resp = self.client().post('/cars/', data=self.car)

@@ -141,5 +141,18 @@ def create_app(config_name):
                 })
                 response.status_code = 201
                 return response
+        elif request.method == 'GET':
+            all_drivers = Drivers.get_all()
+            results = []
+            for driver in all_drivers:
+                obj = {
+                    'id': driver.id,
+                    'name': driver.name,
+                    'dob': driver.dob
+                }
+                results.append(obj)
+            response: object = jsonify(results)
+            response.status_code = 200
+            return response
 
     return app
