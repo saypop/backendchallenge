@@ -37,7 +37,7 @@ def create_app(config_name):
                 })
                 response.status_code = 201
                 return response
-        else:
+        elif request.method == 'GET':
             all_cars = Cars.get_all()
             results = []
             for car in all_cars:
@@ -96,5 +96,18 @@ def create_app(config_name):
                 })
                 response.status_code = 201
                 return response
+        elif request.method == 'GET':
+            all_branches = Branches.get_all()
+            results = []
+            for branch in all_branches:
+                obj = {
+                    'id': branch.id,
+                    'city': branch.city,
+                    'postcode': branch.postcode
+                }
+                results.append(obj)
+            response: object = jsonify(results)
+            response.status_code = 200
+            return response
 
     return app
