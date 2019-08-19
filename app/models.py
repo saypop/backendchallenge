@@ -3,7 +3,7 @@
 from app import db
 
 
-class Cars(db.Model):
+class Car(db.Model):
     """This class defines the cars table """
 
     __tablename__ = 'cars'
