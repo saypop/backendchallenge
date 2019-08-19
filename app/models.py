@@ -32,3 +32,32 @@ class Cars(db.Model):
 
     def __repr__(self):
         return "<Car: {}".format(self.make, self.model, self.year)
+
+
+class Branches(db.Model):
+    """This class defines the branches table"""
+
+    __tablename__ = 'branches'
+
+    id = db.Column(db.Integer, primary_key=True)
+    city = db.Column(db.String, nullable=False)
+    postcode = db.Column(db.String, nullable=False)
+
+    def __init__(self, city, postcode):
+        self.city = city
+        self.postcode = postcode
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @staticmethod
+    def get_all():
+        return Branches.query.all()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return "<Branch: {}".format(self.city, self.postcode)
