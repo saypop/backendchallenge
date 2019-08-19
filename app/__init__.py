@@ -21,7 +21,7 @@ def create_app(config_name):
     db.init_app(app)
 
     @app.route('/cars/', methods=['POST', 'GET'])
-    def cars():
+    def cars_methods():
         if request.method == 'POST':
             make = str(request.data.get('make', ''))
             model = str(request.data.get('model', ''))
@@ -53,7 +53,7 @@ def create_app(config_name):
             return response
 
     @app.route('/cars/<int:id>', methods=['GET', 'PUT'])
-    def manipulate(id, **kwargs):
+    def car_methods(id, **kwargs):
         car = Cars.query.filter_by(id=id).first()
 
         if not car:
@@ -82,7 +82,7 @@ def create_app(config_name):
             return response
 
     @app.route('/branches/', methods=['POST', 'GET'])
-    def branches():
+    def branches_methods():
         if request.method == 'POST':
             city = str(request.data.get('city', ''))
             postcode = str(request.data.get('postcode', ''))
@@ -107,6 +107,22 @@ def create_app(config_name):
                 }
                 results.append(obj)
             response: object = jsonify(results)
+            response.status_code = 200
+            return response
+
+    @app.route('/branches/<int:id>', methods=['GET', 'PUT'])
+    def branch_methods(id, **kwargs):
+        branch = Branches.query.filter_by(id=id).first()
+
+        if not branch:
+            abort(404)
+
+        if request.method == 'GET':
+            response: object = jsonify({
+                'id': branch.id,
+                'city': branch.city,
+                'postcode': branch.postcode
+            })
             response.status_code = 200
             return response
 

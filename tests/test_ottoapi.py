@@ -71,6 +71,16 @@ class APITestCase(unittest.TestCase):
         self.assertIn('Model 3', str(resp.data))
         self.assertIn('2019', str(resp.data))
 
+    def test_can_retrieve_branch_by_id(self):
+        """Test api can retrieve an existing branch by id"""
+        resp = self.client().post('/branches/', data=self.branch)
+        self.assertEqual(resp.status_code, 201)
+        obj = json.loads(resp.data.decode())
+        resp = self.client().get('/branches/{}'.format(obj['id']))
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn('London', str(resp.data))
+        self.assertIn('SW4 0PE', str(resp.data))
+
     def test_can_update_car(self):
         """Test api can update an existing car entry"""
         resp = self.client().post('/cars/', data=self.car)
