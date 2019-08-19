@@ -40,8 +40,8 @@ class Branches(db.Model):
     __tablename__ = 'branches'
 
     id = db.Column(db.Integer, primary_key=True)
-    city = db.Column(db.String, nullable=False)
-    postcode = db.Column(db.String, nullable=False)
+    city = db.Column(db.String(25), nullable=False)
+    postcode = db.Column(db.String(10), nullable=False)
 
     def __init__(self, city, postcode):
         self.city = city
@@ -69,8 +69,8 @@ class Drivers(db.Model):
     __tablename__ = 'drivers'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-    dob = db.Column(db.DateTime, nullable=False)
+    name = db.Column(db.String(50), nullable=False)
+    dob = db.Column(db.String(10), nullable=False)
 
     def __init__(self, name, dob):
         self.name = name

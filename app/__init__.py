@@ -12,7 +12,7 @@ db = SQLAlchemy()
 
 
 def create_app(config_name):
-    from app.models import Cars, Branches
+    from app.models import Cars, Branches, Drivers
 
     app = FlaskAPI(__name__, instance_relative_config=True)
     app.config.from_object(app_config[config_name])
@@ -110,7 +110,7 @@ def create_app(config_name):
             response.status_code = 200
             return response
 
-    @app.route('/branches/<int:id>', methods=['GET', 'PUT'])
+    @app.route('/branches/<int:id>', methods=['GET'])
     def branch_methods(id, **kwargs):
         branch = Branches.query.filter_by(id=id).first()
 
@@ -125,5 +125,21 @@ def create_app(config_name):
             })
             response.status_code = 200
             return response
+
+    @app.route('/drivers/', methods=['POST', 'GET'])
+    def drivers_methods():
+        if request.method == 'POST':
+            name = str(request.data.get('name', ''))
+            dob = str(request.data.get('dob', ''))
+            if name and dob:
+                driver = Drivers(name=name, dob=dob)
+                driver.save()
+                response: object = jsonify({
+                    'id': driver.id,
+                    'name': driver.name,
+                    'dob': driver.dob
+                })
+                response.status_code = 201
+                return response
 
     return app

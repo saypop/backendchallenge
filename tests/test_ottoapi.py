@@ -1,4 +1,4 @@
-# test_otto-backend.py
+# test_api.py
 
 import unittest
 import os
@@ -22,6 +22,10 @@ class APITestCase(unittest.TestCase):
             'city': 'London',
             'postcode': 'SW4 0PE'
         }
+        self.driver = {
+            'name': 'John Doe',
+            'dob': '01/01/1980'
+        }
 
         with self.app.app_context():
             db.create_all()
@@ -40,6 +44,13 @@ class APITestCase(unittest.TestCase):
         self.assertEqual(resp.status_code, 201)
         self.assertIn('London', str(resp.data))
         self.assertIn('SW4 0PE', str(resp.data))
+
+    def test_driver_creation(self):
+        """Test the creation of a driver with a POST request"""
+        resp = self.client().post('/drivers/', data=self.driver)
+        self.assertEqual(resp.status_code, 201)
+        self.assertIn('John Doe', str(resp.data))
+        self.assertIn('01/01/1980', str(resp.data))
 
     def test_retrieve_all_cars(self):
         """Test api can get a list of all cars with a GET request"""
