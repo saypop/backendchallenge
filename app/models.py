@@ -1,7 +1,7 @@
 # app/models.py
 
 from app import db
-import pickle
+from flask import jsonify
 
 
 class Cars(db.Model):
@@ -10,10 +10,10 @@ class Cars(db.Model):
     __tablename__ = 'cars'
 
     id = db.Column(db.Integer, primary_key=True)
-    make = db.Column(db.String(256), nullable=False)
-    model = db.Column(db.String(256), nullable=False)
+    make = db.Column(db.String(25), nullable=False)
+    model = db.Column(db.String(25), nullable=False)
     year = db.Column(db.Integer, nullable=False)
-    currently_with = db.Column(db.PickleType())
+    currently_with = db.Column(db.String(256))
 
     def __init__(self, make, model, year, currently_with=None):
         self.make = make
@@ -34,7 +34,7 @@ class Cars(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return "<Car: {}".format(self.make, self.model, self.year, self.currently_with)
+        return "<Car: {}, {}, {}, {}>".format(self.make, self.model, self.year, self.currently_with)
 
 
 class Branches(db.Model):
@@ -63,7 +63,7 @@ class Branches(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return "<Branch: {}".format(self.city, self.postcode)
+        return "{ " + "type: branch, id: {}, city: {}, postcode: {} ".format(self.id, self.city, self.postcode) + " }"
 
 
 class Drivers(db.Model):
@@ -92,4 +92,4 @@ class Drivers(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return "<Driver: {}".format(self.name, self.dob)
+        return "{ " + "type: driver, id: {}, name: {}, dob: {} ".format(self.id, self.name, self.dob) + " }"

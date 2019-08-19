@@ -3,7 +3,6 @@
 import unittest
 import os
 import json
-import pickle
 from app import create_app, db
 
 
@@ -132,7 +131,29 @@ class APITestCase(unittest.TestCase):
         self.client().post('/drivers/', data=self.driver)
         resp = self.client().put('/cars/1/drivers/1')
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(json.loads(resp.data)['currently_with'], 'John Doe')
+        self.assertEqual(json.loads(resp.data)['currently_with'],
+                         '"{ '
+                         'type: driver, '
+                         'id: 1, '
+                         'name: John Doe, '
+                         'dob: 01/01/1980  '
+                         '}"'
+                         )
+
+    def test_can_assign_branch(self):
+        """Test api can update an existing car entry with a branch"""
+        self.client().post('/cars/', data=self.car)
+        self.client().post('/branches/', data=self.branch)
+        resp = self.client().put('/cars/1/branches/1')
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(json.loads(resp.data)['currently_with'],
+                         '"{ '
+                         'type: branch, '
+                         'id: 1, '
+                         'city: London, '
+                         'postcode: SW4 0PE  '
+                         '}"'
+                         )
 
     def tearDown(self):
         """Teardown all the tables"""

@@ -3,7 +3,7 @@
 from flask import request, jsonify, abort
 from flask_api import FlaskAPI
 from flask_sqlalchemy import SQLAlchemy
-import pickle
+import json
 
 # local import
 from instance.config import app_config
@@ -184,7 +184,28 @@ def create_app(config_name):
         if not car and driver:
             abort(404)
 
-        car.currently_with = driver.__repr__()
+        car.currently_with = json.dumps(driver.__repr__())
+        car.save()
+
+        response: object = jsonify({
+            'id': car.id,
+            'make': car.make,
+            'model': car.model,
+            'year': car.year,
+            'currently_with': car.currently_with
+        })
+        response.status_code = 200
+        return response
+
+    @app.route('/cars/<int:car_id>/branches/<int:branch_id>', methods=['PUT'])
+    def assign_branch(car_id, branch_id):
+        car = Cars.query.filter_by(id=car_id).first()
+        branch = Branches.query.filter_by(id=branch_id).first()
+
+        if not car and branch:
+            abort(404)
+
+        car.currently_with = json.dumps(branch.__repr__())
         car.save()
 
         response: object = jsonify({
