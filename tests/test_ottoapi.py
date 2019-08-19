@@ -101,6 +101,16 @@ class APITestCase(unittest.TestCase):
         self.assertIn('London', str(resp.data))
         self.assertIn('SW4 0PE', str(resp.data))
 
+    def test_can_retrieve_driver_by_id(self):
+        """Test api can retrieve an existing driver by id"""
+        resp = self.client().post('/drivers/', data=self.driver)
+        self.assertEqual(resp.status_code, 201)
+        obj = json.loads(resp.data.decode())
+        resp = self.client().get('/drivers/{}'.format(obj['id']))
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn('John Doe', str(resp.data))
+        self.assertIn('01/01/1980', str(resp.data))
+
     def test_can_update_car(self):
         """Test api can update an existing car entry"""
         resp = self.client().post('/cars/', data=self.car)

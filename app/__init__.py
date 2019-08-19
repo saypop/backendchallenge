@@ -155,4 +155,20 @@ def create_app(config_name):
             response.status_code = 200
             return response
 
+    @app.route('/drivers/<int:id>', methods=['GET'])
+    def driver_methods(id, **kwargs):
+        driver = Drivers.query.filter_by(id=id).first()
+
+        if not driver:
+            abort(404)
+
+        if request.method == 'GET':
+            response: object = jsonify({
+                'id': driver.id,
+                'name': driver.name,
+                'dob': driver.dob
+            })
+            response.status_code = 200
+            return response
+
     return app
