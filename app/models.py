@@ -60,4 +60,33 @@ class Branches(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return "<Branch: {}".format(self.city, self.postcode)
+        return "<Branch: {}, {}>".format(self.city, self.postcode)
+
+
+class Drivers(db.Model):
+    """This class defines the drivers table"""
+
+    __tablename__ = 'drivers'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    dob = db.Column(db.DateTime, nullable=False)
+
+    def __init__(self, name, dob):
+        self.name = name
+        self.dob = dob
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @staticmethod
+    def get_all():
+        return Drivers.query.all()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return "<Driver: {}, {}>".format(self.name, self.dob)
