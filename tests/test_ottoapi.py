@@ -40,6 +40,17 @@ class CarTestCase(unittest.TestCase):
         self.assertIn('Model 3', str(resp.data))
         self.assertIn('2019', str(resp.data))
 
+    def test_can_retrieve_car_by_id(self):
+        """Test api can retrieve an existing car by id"""
+        resp = self.client().post('/cars/', data=self.car)
+        self.assertEqual(resp.status_code, 201)
+        obj = json.loads(resp.data.decode())
+        resp = self.client().get('/cars/{}'.format(obj['id']))
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn('Tesla', str(resp.data))
+        self.assertIn('Model 3', str(resp.data))
+        self.assertIn('2019', str(resp.data))
+
     def tearDown(self):
         """teardown all the tables"""
         with self.app.app_context():

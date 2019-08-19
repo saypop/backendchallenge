@@ -3,7 +3,7 @@
 from app import db
 
 
-class Car(db.Model):
+class Cars(db.Model):
     """This class defines the cars table """
 
     __tablename__ = 'cars'
@@ -24,7 +24,7 @@ class Car(db.Model):
 
     @staticmethod
     def get_all():
-        return Car.query.all()
+        return Cars.query.all()
 
     def delete(self):
         db.session.delete(self)
