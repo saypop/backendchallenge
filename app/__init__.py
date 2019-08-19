@@ -184,8 +184,7 @@ def create_app(config_name):
         if not car and driver:
             abort(404)
 
-        bytes_driver = pickle.dumps(driver)
-        car.currently_with = bytes_driver
+        car.currently_with = driver.__repr__()
         car.save()
 
         response: object = jsonify({
@@ -193,7 +192,7 @@ def create_app(config_name):
             'make': car.make,
             'model': car.model,
             'year': car.year,
-            'currently_with': driver.name
+            'currently_with': car.currently_with
         })
         response.status_code = 200
         return response
