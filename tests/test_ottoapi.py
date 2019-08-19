@@ -6,8 +6,8 @@ import json
 from app import create_app, db
 
 
-class CarTestCase(unittest.TestCase):
-    """This represents the car test case"""
+class APITestCase(unittest.TestCase):
+    """This represents the API test case"""
 
     def setUp(self):
         """Some test variables and initialize app"""
@@ -17,6 +17,10 @@ class CarTestCase(unittest.TestCase):
             'make': 'Tesla',
             'model': 'Model 3',
             'year': 2019
+        }
+        self.branch = {
+            'city': 'London',
+            'postcode': 'SW4 0PE'
         }
 
         with self.app.app_context():
@@ -29,6 +33,13 @@ class CarTestCase(unittest.TestCase):
         self.assertIn('Tesla', str(resp.data))
         self.assertIn('Model 3', str(resp.data))
         self.assertIn('2019', str(resp.data))
+
+    def test_branch_creation(self):
+        """Test the creation of a branch with a POST request"""
+        resp = self.client().post('/branches/', data=self.branch)
+        self.assertEqual(resp.status_code, 201)
+        self.assertIn('London', str(resp.data))
+        self.assertIn('SW4 0PE', str(resp.data))
 
     def test_retrieve_all_cars(self):
         """Test api can get a list of all cars with a GET request"""

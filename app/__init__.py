@@ -12,7 +12,7 @@ db = SQLAlchemy()
 
 
 def create_app(config_name):
-    from app.models import Cars
+    from app.models import Cars, Branches
 
     app = FlaskAPI(__name__, instance_relative_config=True)
     app.config.from_object(app_config[config_name])
@@ -81,5 +81,20 @@ def create_app(config_name):
             response.status_code = 200
             return response
 
+    @app.route('/branches/', methods=['POST', 'GET'])
+    def branches():
+        if request.method == 'POST':
+            city = str(request.data.get('city', ''))
+            postcode = str(request.data.get('postcode', ''))
+            if city and postcode:
+                branch = Branches(city=city, postcode=postcode)
+                branch.save()
+                response: object = jsonify({
+                    'id': branch.id,
+                    'city': branch.city,
+                    'postcode': branch.postcode
+                })
+                response.status_code = 201
+                return response
 
     return app
