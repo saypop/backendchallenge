@@ -6,7 +6,7 @@ import json
 from app import create_app, db
 
 
-class APITestCase(unittest.TestCase):
+class CarTestCase(unittest.TestCase):
     """This represents the car test case"""
 
     def setUp(self):
@@ -26,6 +26,16 @@ class APITestCase(unittest.TestCase):
         """Test the creation of a car with a POST request"""
         resp = self.client().post('/cars/', data=self.car)
         self.assertEqual(resp.status_code, 201)
+        self.assertIn('Tesla', str(resp.data))
+        self.assertIn('Model 3', str(resp.data))
+        self.assertIn('2019', str(resp.data))
+
+    def test_retrieve_all_cars(self):
+        """Test api can get a list of all cars with a GET request"""
+        resp = self.client().post('/cars/', data=self.car)
+        self.assertEqual(resp.status_code, 201)
+        resp = self.client().get('/cars/')
+        self.assertEqual(resp.status_code, 200)
         self.assertIn('Tesla', str(resp.data))
         self.assertIn('Model 3', str(resp.data))
         self.assertIn('2019', str(resp.data))

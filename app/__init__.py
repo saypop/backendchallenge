@@ -20,21 +20,36 @@ def create_app(config_name):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
 
-    @app.route('/cars/', methods=['POST'])
+    @app.route('/cars/', methods=['POST', 'GET'])
     def cars():
-        make = str(request.data.get('make', ''))
-        model = str(request.data.get('model', ''))
-        year = request.data.get('year', '')
-        if make and model and year:
-            car = Car(make=make, model=model, year=year)
-            car.save()
-            response = jsonify({
-                'id': car.id,
-                'make': car.make,
-                'model': car.model,
-                'year': car.year
-            })
-            response.status_code = 201
+        if request.method == 'POST':
+            make = str(request.data.get('make', ''))
+            model = str(request.data.get('model', ''))
+            year = request.data.get('year', '')
+            if make and model and year:
+                car = Car(make=make, model=model, year=year)
+                car.save()
+                response: object = jsonify({
+                    'id': car.id,
+                    'make': car.make,
+                    'model': car.model,
+                    'year': car.year
+                })
+                response.status_code = 201
+                return response
+        else:
+            all_cars = Car.get_all()
+            results = []
+            for car in all_cars:
+                obj = {
+                    'id': car.id,
+                    'make': car.make,
+                    'model': car.model,
+                    'year': car.year
+                }
+                results.append(obj)
+            response: object = jsonify(results)
+            response.status_code = 200
             return response
 
     return app
