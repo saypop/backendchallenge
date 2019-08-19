@@ -1,16 +1,26 @@
+To run this api locally:
+`$ git clone this repo`
+`$ cd backendchallenge`
+Setup and enter a virtual environment:
+`$ virtual venv`
+`$ source .env`
+Install the requirements:
+`$ pip install -r requirements.txt`
+
+
 Back End Challenge
 ====================
 
 This code challenge allows you to demonstrate your ability to build a simple web server, but gives us a chance to see how you code and how you use version control.
 
 ## Things we're looking for
-- Clean & readable code is super important, as it means it's easier for people to read, reuse, and refactor your work
-- Good use of version control means it's easy for people to check and review your code
-- Using a testing framework (where applicable) means you're more likely to deliver robust code
+- Clean & readable code is super important, as it means it's easier for people to read, reuse, and refactor your work.
+- Good use of version control means it's easy for people to check and review your code.
+- [Using a testing framework](https://medium.com/javascript-scene/tdd-changed-my-life-5af0ce099f80) (where applicable) means you're more likely to deliver robust code.
 
 ## The Challenge
 
-We deal with lots and lots of cars on a day-to-day basis, so naturally this will be related to automotives. 
+We deal with lots and lots of cars on a day-to-day basis, so naturally this will be related to automotives.
 
 Imagine you have a car rental business. You have multiple **Branches**. A car can either be at a **Branch** or with a **Driver**.
 
@@ -53,7 +63,7 @@ Before you get started, make sure to read through all the levels below.
 
 #### Levels of Awesome
 
-Choose one of the following routes for your journey. 
+Choose one of the following routes for your journey.
 
 -------
 ### Novice
@@ -91,4 +101,4 @@ Choose one of the following routes for your journey.
 *"All is fair in love and bonus rounds"*
 
 **TASKS**
-+ Surprise us! Add a feature that you think would work well here; for instance, advanced search, integration with other API, a "Favorite" functionality 
++ Surprise us! Add a feature that you think would work well here; for instance, advanced search, integration with other API, a "Favorite" functionality
