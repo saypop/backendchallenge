@@ -52,7 +52,7 @@ def create_app(config_name):
             response.status_code = 200
             return response
 
-    @app.route('/cars/<int:id>', methods=['GET'])
+    @app.route('/cars/<int:id>', methods=['GET', 'PUT'])
     def manipulate(id, **kwargs):
         car = Cars.query.filter_by(id=id).first()
 
@@ -68,5 +68,18 @@ def create_app(config_name):
             })
             response.status_code = 200
             return response
+        elif request.method == 'PUT':
+            for key, value in request.data.items():
+                setattr(car, key, value)
+            car.save()
+            response: object = jsonify({
+                'id': car.id,
+                'make': car.make,
+                'model': car.model,
+                'year': car.year
+            })
+            response.status_code = 200
+            return response
+
 
     return app

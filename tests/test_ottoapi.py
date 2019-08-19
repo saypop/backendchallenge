@@ -51,8 +51,21 @@ class CarTestCase(unittest.TestCase):
         self.assertIn('Model 3', str(resp.data))
         self.assertIn('2019', str(resp.data))
 
+    def test_can_update_car(self):
+        """Test api can update an existing car entry"""
+        resp = self.client().post('/cars/', data=self.car)
+        self.assertEqual(resp.status_code, 201)
+        self.assertIn('Tesla', str(resp.data))
+        resp = self.client().put('/cars/1', data={
+            'make': 'Foo'
+        })
+        self.assertEqual(resp.status_code, 200)
+        resp = self.client().get('/cars/1')
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn('Foo', str(resp.data))
+
     def tearDown(self):
-        """teardown all the tables"""
+        """Teardown all the tables"""
         with self.app.app_context():
             db.session.remove()
             db.drop_all()
