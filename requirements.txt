@@ -11,6 +11,7 @@ flask-migrate
 flask-script
 flask-sqlalchemy
 itsdangerous
+psycopg2
 python-dateutil
 python-editor
 six
