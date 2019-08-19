@@ -1,0 +1,16 @@
+Jinja2
+Mako
+MarkupSafe
+SQLAlchemy
+Werkzeug
+alembic
+click
+flask
+flask-api
+flask-migrate
+flask-script
+flask-sqlalchemy
+itsdangerous
+python-dateutil
+python-editor
+six
