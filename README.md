@@ -1,11 +1,36 @@
+### Solution to OttoCar tech test
+
 To run this api locally:
-`$ git clone this repo`
-`$ cd backendchallenge`
-Setup and enter a virtual environment:
-`$ virtual venv`
-`$ source .env`
-Install the requirements:
-`$ pip install -r requirements.txt`
+- `$ git clone this repo`
+- `$ cd backendchallenge`
+- Setup and enter a virtual environment:
+- `$ virtual venv`
+- `$ source .env`
+- Set a secret key (this can be whatever you like, just remember what it is if you want to use this again.)
+- '$ export SECRET="some-string-of-your-choosing-that-is-quite-long"'
+- Install the requirements:
+- `$ pip install -r requirements.txt`
+- Create the databases (postgres required):
+- `$ createdb otto_api_test`
+- `$ createdb otto_api`
+- Initialize and Migrate:
+- `$ source .db_init`
+- Run the tests:
+- `$ python manage.py test`
+- Run the api:
+- `$ flask run`
+- To see the api working I suggest you use postman, here are screen shots of the tests I ran:
+![Car creation](/images/2019/08/Screenshot 2019-08-19 at 16.22.11.png)
+![Car get](/images/2019/08/Screenshot 2019-08-19 at 16.22.30.png)
+![Driver creation](/images/2019/08/Screenshot 2019-08-19 at 16.23.04.png)
+![Driver assignment](/images/2019/08/Screenshot 2019-08-19 at 16.23.39.png)
+
+### Technologies used
+* **[Python3](https://www.python.org/downloads/)**
+* **[Flask](flask.pocoo.org/)**
+* **[Virtualenv](https://virtualenv.pypa.io/en/stable/)**
+* **[PostgreSQL](https://www.postgresql.org/download/)**
+
 
 
 Back End Challenge
