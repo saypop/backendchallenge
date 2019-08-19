@@ -3,6 +3,7 @@
 import unittest
 import os
 import json
+import pickle
 from app import create_app, db
 
 
@@ -16,7 +17,8 @@ class APITestCase(unittest.TestCase):
         self.car = {
             'make': 'Tesla',
             'model': 'Model 3',
-            'year': 2019
+            'year': 2019,
+            'currently_with': 'None'
         }
         self.branch = {
             'city': 'London',
@@ -123,6 +125,14 @@ class APITestCase(unittest.TestCase):
         resp = self.client().get('/cars/1')
         self.assertEqual(resp.status_code, 200)
         self.assertIn('Foo', str(resp.data))
+
+    def test_can_assign_driver(self):
+        """Test api can update an existing car entry with a driver"""
+        self.client().post('/cars/', data=self.car)
+        self.client().post('/drivers/', data=self.driver)
+        resp = self.client().put('/cars/1/drivers/1')
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(json.loads(resp.data)['currently_with'], 'John Doe')
 
     def tearDown(self):
         """Teardown all the tables"""

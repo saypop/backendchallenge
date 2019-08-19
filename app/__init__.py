@@ -3,6 +3,7 @@
 from flask import request, jsonify, abort
 from flask_api import FlaskAPI
 from flask_sqlalchemy import SQLAlchemy
+import pickle
 
 # local import
 from instance.config import app_config
@@ -33,7 +34,8 @@ def create_app(config_name):
                     'id': car.id,
                     'make': car.make,
                     'model': car.model,
-                    'year': car.year
+                    'year': car.year,
+                    'currently_with': car.currently_with
                 })
                 response.status_code = 201
                 return response
@@ -45,7 +47,8 @@ def create_app(config_name):
                     'id': car.id,
                     'make': car.make,
                     'model': car.model,
-                    'year': car.year
+                    'year': car.year,
+                    'currently_with': car.currently_with
                 }
                 results.append(obj)
             response: object = jsonify(results)
@@ -64,7 +67,8 @@ def create_app(config_name):
                 'id': car.id,
                 'make': car.make,
                 'model': car.model,
-                'year': car.year
+                'year': car.year,
+                'currently_with': car.currently_with
             })
             response.status_code = 200
             return response
@@ -76,7 +80,8 @@ def create_app(config_name):
                 'id': car.id,
                 'make': car.make,
                 'model': car.model,
-                'year': car.year
+                'year': car.year,
+                'currently_with': car.currently_with
             })
             response.status_code = 200
             return response
@@ -170,5 +175,28 @@ def create_app(config_name):
             })
             response.status_code = 200
             return response
+
+    @app.route('/cars/<int:car_id>/drivers/<int:driver_id>', methods=['PUT'])
+    def assign_driver(car_id, driver_id):
+        car = Cars.query.filter_by(id=car_id).first()
+        driver = Drivers.query.filter_by(id=driver_id).first()
+
+        if not car and driver:
+            abort(404)
+
+        bytes_driver = pickle.dumps(driver)
+        car.currently_with = bytes_driver
+        car.save()
+
+        response: object = jsonify({
+            'id': car.id,
+            'make': car.make,
+            'model': car.model,
+            'year': car.year,
+            'currently_with': driver.name
+        })
+        response.status_code = 200
+        return response
+
 
     return app

@@ -1,22 +1,25 @@
 # app/models.py
 
 from app import db
+import pickle
 
 
 class Cars(db.Model):
-    """This class defines the cars table """
+    """This class defines the cars table"""
 
     __tablename__ = 'cars'
 
     id = db.Column(db.Integer, primary_key=True)
-    make = db.Column(db.String(256), nullable=False, unique=True)
+    make = db.Column(db.String(256), nullable=False)
     model = db.Column(db.String(256), nullable=False)
-    year = db.Column(db.Integer)
+    year = db.Column(db.Integer, nullable=False)
+    currently_with = db.Column(db.PickleType())
 
-    def __init__(self, make, model, year):
+    def __init__(self, make, model, year, currently_with=None):
         self.make = make
         self.model = model
         self.year = year
+        self.currently_with = currently_with
 
     def save(self):
         db.session.add(self)
@@ -31,7 +34,7 @@ class Cars(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return "<Car: {}".format(self.make, self.model, self.year)
+        return "<Car: {}".format(self.make, self.model, self.year, self.currently_with)
 
 
 class Branches(db.Model):
@@ -60,7 +63,7 @@ class Branches(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return "<Branch: {}, {}>".format(self.city, self.postcode)
+        return "<Branch: {}".format(self.city, self.postcode)
 
 
 class Drivers(db.Model):
@@ -89,4 +92,4 @@ class Drivers(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return "<Driver: {}, {}>".format(self.name, self.dob)
+        return "<Driver: {}".format(self.name, self.dob)
