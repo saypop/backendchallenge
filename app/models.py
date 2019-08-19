@@ -36,4 +36,4 @@ class Cars(db.Model):
 
 
     def __repr__(self):
-        return "<Car: {}, {}, {}>".format(self.make, self.model, self.year) 
+        return "<Car: {}, {}, {}>".format(self.make, self.model, self.year)
