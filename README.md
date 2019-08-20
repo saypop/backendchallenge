@@ -20,10 +20,10 @@ To run this api locally:
 - Run the api:
 - `$ flask run`
 - To see the api working I suggest you use postman, here are screen shots of the tests I ran:
-![Car creation](https://github.com/saypop/backendchallenge/blob/master/images/Screenshot%202019-08-19%20at%2016.22.11.png)
-![Car get](https://github.com/saypop/backendchallenge/blob/master/images/Screenshot%202019-08-19%20at%2016.22.30.png)
-![Driver creation](https://github.com/saypop/backendchallenge/blob/master/images/Screenshot%202019-08-19%20at%2016.23.04.png)
-![Driver assignment](https://github.com/saypop/backendchallenge/blob/master/images/Screenshot%202019-08-19%20at%2016.23.29.png)
+![](https://github.com/saypop/backendchallenge/blob/master/images/Screenshot%202019-08-19%20at%2016.22.11.png)
+![](https://github.com/saypop/backendchallenge/blob/master/images/Screenshot%202019-08-19%20at%2016.22.30.png)
+![](https://github.com/saypop/backendchallenge/blob/master/images/Screenshot%202019-08-19%20at%2016.23.04.png)
+![](https://github.com/saypop/backendchallenge/blob/master/images/Screenshot%202019-08-19%20at%2016.23.29.png)
 
 ### Technologies used
 * **[Python3](https://www.python.org/downloads/)**
