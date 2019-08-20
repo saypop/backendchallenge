@@ -32,7 +32,6 @@ To run this api locally:
 * **[PostgreSQL](https://www.postgresql.org/download/)**
 
 
-
 Back End Challenge
 ====================
 
